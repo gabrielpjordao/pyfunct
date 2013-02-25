@@ -39,7 +39,6 @@ def perform_search(browser, query):
 @action
 def assert_title_contains(browser, expected_title):
     page_title = browser.page_title
-    expected_title = 'Functional testing - Wikipedia, the free encyclopedia'
     assert expected_title in page_title, "The expected title was not found in the page title"
 
 from pyfunct import FunctTestCase
