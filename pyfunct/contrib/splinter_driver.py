@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from pyfunct import config
 from pyfunct.browsers import BaseBrowserDriver
 from pyfunct.exceptions import PageNotLoadedException
 
@@ -29,7 +30,7 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         if not splinter_available:
             raise ImportError("In order to use splinter Base Driver you have to "
                 "install it. Check the instructions at http://splinter.cobrateam.info")
-        self._browser = Browser()
+        self._browser = Browser(config.default_browser)
 
     @property
     def page_url(self):
