@@ -55,3 +55,29 @@ class PagesTestCase(unittest.TestCase):
                     return [('alias', 'selector', 'invalid-selector')]
 
             page = PageWithInvalidElementSelector()
+
+
+    def test_page_elements_inheritance(self):
+        class ParentPage(Page):
+
+            page_name = 'parent-page'
+
+            @property
+            def elements_selectors(self):
+                return [
+                    ('parent-element', '//parent')
+                ]
+
+        class ChildPage(ParentPage):
+
+            page_name = 'child-page'
+
+            @property
+            def elements_selectors(self):
+                return [
+                    ('child-element', '//child')
+                ]
+
+        child = REGISTERED_PAGES['child-page']
+        self.assertEqual(child.elements['child-element'], {'selection_type': 'xpath', 'selector': '//child'})
+        self.assertEqual(child.elements['parent-element'], {'selection_type': 'xpath', 'selector': '//parent'})

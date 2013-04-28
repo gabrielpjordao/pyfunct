@@ -19,10 +19,11 @@ class PageMetaclass(type):
         except KeyError:
             raise NotImplementedError("You must specify a page name for %s." % cls.__name__)
 
+
+        if not hasattr(cls, 'elements'):
+            cls.elements = {}
+
         page = cls()
-
-        page.elements = {}
-
         for element in page.elements_selectors:
             page.register_element(*element)
 
@@ -52,7 +53,8 @@ class Page(object):
         """
         raise NotImplementedError("The page must implement the get_url method.")
 
-    def register_element(self, alias, selector, selection_type='xpath'):
+    @classmethod
+    def register_element(cls, alias, selector, selection_type='xpath'):
         """
             Register elements to the current page, using the elements list.
             Elements will be dicts with the following keys:
@@ -63,7 +65,7 @@ class Page(object):
         if selection_type not in ('xpath', 'id', 'css', 'name'):
             raise SelectorTypeNotSupportedException
 
-        self.elements[alias] = {
+        cls.elements[alias] = {
             'selector': selector,
             'selection_type': selection_type
         }
