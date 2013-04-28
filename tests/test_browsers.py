@@ -137,3 +137,29 @@ class BaseBrowserDriverTestCase(unittest.TestCase):
         expected_element = 'Element Got: selector=//selector, selection_type=xpath'
 
         self.assertEqual(element, expected_element)
+
+    def test_get_page_element_by_key_access(self):
+        class PageWithElement(Page):
+            page_name = 'page_with_element'
+
+            @property
+            def elements_selectors(self):
+                return [
+                    ('the-alias', '//selector', 'xpath')
+                ]
+
+        class GetPageElementDriver(BaseBrowserDriver):
+
+            driver_name = 'get_page_element_driver'
+
+            def get_element_by_xpath(self, selector):
+                return 'Element Got: selector=%s, selection_type=xpath' % (selector)
+
+        driver = GetPageElementDriver()
+        driver.switch_page('page_with_element')
+
+        element = driver['the-alias']
+
+        expected_element = 'Element Got: selector=//selector, selection_type=xpath'
+
+        self.assertEqual(element, expected_element)

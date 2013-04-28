@@ -103,6 +103,12 @@ class BaseBrowserDriver(object):
 
         return self.open_url(url)
 
+    def __getitem__(self, key):
+        """
+            Offers a shortcut for getting page elements.
+        """
+        return self.get_page_element(key)
+
     def click(self, element):
         """
             Clicks an element.
