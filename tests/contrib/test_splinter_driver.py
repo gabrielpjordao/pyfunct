@@ -168,6 +168,17 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         element.click.assert_called()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_mouse_over(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        element = Mock()
+
+        driver.mouse_over(element)
+
+        element.mouse_over.assert_called()
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_check(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)

@@ -127,6 +127,13 @@ class BaseBrowserDriver(object):
         """
         raise NotImplementedError("This browser doesn't support unchecking elements")
 
+    def mouse_over(self, element):
+        """
+            Simulates an element mouse over.
+        """
+        raise NotImplementedError("This browser doesn't support mouse over.")
+
+
     def open_url(self, url):
         """
             Opens an URL and returns it's response.

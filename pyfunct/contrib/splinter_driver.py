@@ -90,6 +90,10 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         self._handle_empty_element_action(element)
         return element.uncheck()
 
+    def mouse_over(self, element):
+        self._handle_empty_element_action(element)
+        return element.mouse_over()
+
     def execute_script(self, script):
         return self._browser.evaluate_script(script)
 
