@@ -2,7 +2,7 @@
 
 from pyfunct import config
 from pyfunct.browsers import BaseBrowserDriver
-from pyfunct.exceptions import PageNotLoadedException
+from pyfunct.exceptions import PageNotLoadedException, ActionNotPerformableException
 
 splinter_available = True
 
@@ -31,6 +31,12 @@ class SplinterBrowserDriver(BaseBrowserDriver):
             raise ImportError("In order to use splinter Base Driver you have to "
                 "install it. Check the instructions at http://splinter.cobrateam.info")
         self._browser = Browser(config.default_browser)
+
+    def _handle_empty_element_action(self, element):
+        if not element:
+            raise ActionNotPerformableException("The action couldn't be perfomed"
+                " because the element couldn't be found; Try checking if your element"
+                "selector is correct and if the page is loaded properly.")
 
     @property
     def page_url(self):
@@ -69,15 +75,19 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         return self._browser.find_by_tag(selector)
 
     def type(self, element, text, slowly=False):
+        self._handle_empty_element_action(element)
         return element.type(text, slowly)
 
     def click(self, element):
+        self._handle_empty_element_action(element)
         return element.click()
 
     def check(self, element):
+        self._handle_empty_element_action(element)
         return element.check()
 
     def uncheck(self, element):
+        self._handle_empty_element_action(element)
         return element.uncheck()
 
     def execute_script(self, script):

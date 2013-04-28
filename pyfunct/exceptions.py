@@ -25,3 +25,8 @@ class PageNotLoadedException(Exception):
     """
     Exception raised when the page is not loaded properly
     """
+
+class ActionNotPerformableException(Exception):
+    """
+        Raised whenever an action cannot be performed;
+    """
