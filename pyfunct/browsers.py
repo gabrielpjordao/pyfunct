@@ -103,6 +103,24 @@ class BaseBrowserDriver(object):
 
         return self.open_url(url)
 
+    def reload(self):
+        """
+            Reloads the page
+        """
+        raise NotImplementedError("This page doesn't support reloading;")
+
+    def go_back(self):
+        """
+            Goes back in history
+        """
+        raise NotImplementedError("This page doesn't support going back")
+
+    def go_forward(self):
+        """
+            Goes forward in history
+        """
+        raise NotImplementedError("This page doesn't support going forward")
+
     def __getitem__(self, key):
         """
             Offers a shortcut for getting page elements.

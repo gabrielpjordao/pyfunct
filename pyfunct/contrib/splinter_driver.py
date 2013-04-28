@@ -94,6 +94,15 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         self._handle_empty_element_action(element)
         return element.mouse_over()
 
+    def reload(self):
+        return self._browser.reload()
+
+    def go_back(self):
+        return self._browser.back()
+
+    def go_forward(self):
+        return self._browser.forward()
+
     def execute_script(self, script):
         return self._browser.evaluate_script(script)
 

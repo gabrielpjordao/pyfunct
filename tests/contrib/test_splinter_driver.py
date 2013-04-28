@@ -72,6 +72,34 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         mocked_browser.quit.assert_called()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_reload(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        driver.reload()
+
+        mocked_browser.reload.assert_called()
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_go_forward(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        driver.go_forward()
+
+        mocked_browser.forward.assert_called()
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_go_back(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        driver.go_back()
+
+        mocked_browser.back.assert_called()
+
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_is_element_visible(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)
