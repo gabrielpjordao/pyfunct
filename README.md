@@ -34,12 +34,10 @@ class MyTestCase(FunctTestCase):
         self.browser.open_page('wikipedia index')
 
         # Fill the search input with "Functional testing"
-        search_input = self.browser.get_page_element('search input')
-        self.browser.type(search_input, 'Functional testing')
+        self.browser.type(self.browser['search input'], 'Functional testing')
 
         # Submit the search by clicking the button
-        search_button = self.browser.get_page_element('search button')
-        self.browser.click_and_wait(search_button)
+        self.browser.click_and_wait(self.browser['search button'])
 
         page_title = self.browser.page_title
         expected_title = 'Functional testing - Wikipedia, the free encyclopedia'
@@ -94,18 +92,15 @@ def perform_search(browser, query):
     browser.open_page('wikipedia index')
 
     # Fill the search input with "Functional testing"
-    search_input = browser.get_page_element('search input')
-    browser.type(search_input, 'Functional testing')
+    browser.type(browser['search input'], 'Functional testing')
 
     # Submit the search by clicking the button
-    search_button = browser.get_page_element('search button')
-    browser.click_and_wait(search_button)
+    browser.click_and_wait(browser['search button'])
 
 @action
 def assert_title_contains(browser, expected_title):
     page_title = browser.page_title
     assert expected_title in page_title, "The expected title was not found in the page title"
-
 ```
 
 ### Step 4 - Manage your config
