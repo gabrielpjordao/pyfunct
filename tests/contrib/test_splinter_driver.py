@@ -60,7 +60,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.open_url(url)
 
-        mocked_browser.visit.assert_called_once_with(url)
+        mocked_browser.driver.get.assert_called_once_with(url)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_quit(self, mocked_browser):
