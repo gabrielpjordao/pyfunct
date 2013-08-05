@@ -51,7 +51,7 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         return self._browser.title
 
     def open_url(self, url):
-        self._browser.visit(url)
+        self._browser.driver.get(url)
 
     def quit(self):
         return self._browser.quit()
