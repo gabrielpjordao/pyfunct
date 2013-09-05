@@ -78,6 +78,13 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         self._handle_empty_element_action(element)
         return element.type(text, slowly)
 
+    def fill(self, element, text):
+      self._handle_empty_element_action(element)
+      return element.fill(text)
+
+    def clear(self, element):
+      self.fill(element, '')
+
     def click(self, element):
         self._handle_empty_element_action(element)
         return element.click()
