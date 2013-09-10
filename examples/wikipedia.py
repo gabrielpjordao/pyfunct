@@ -55,10 +55,10 @@ def perform_search(browser, query):
     browser.open_page('wikipedia index')
 
     # Fill the search input with "Functional testing"
-    browser.type(browser['search input'], 'Functional testing')
+    browser.type('search input', 'Functional testing')
 
     # Submit the search by clicking the button
-    browser.click_and_wait(browser['search button'])
+    browser.click_and_wait('search button')
 
 
 @action

@@ -20,6 +20,14 @@ PyFunct includes:
 This should get you started with the basic functionality. You can look for more examples
 on `examples` folder.
 
+## Installing
+To install pyfunct, all you should do is:
+`pip install pyfunct`
+
+Or
+
+`easy_install pyfunct`, if you must.
+
 
 ### Step 1 - The test case
 Here is a code snippet with two basic tests that do the same thing: A wikipedia search. The first uses pages and the second uses pages and actions. Both concepts will be explained ahead.
@@ -92,10 +100,10 @@ def perform_search(browser, query):
     browser.open_page('wikipedia index')
 
     # Fill the search input with "Functional testing"
-    browser.type(browser['search input'], 'Functional testing')
+    browser.type('search input', 'Functional testing')
 
     # Submit the search by clicking the button
-    browser.click_and_wait(browser['search button'])
+    browser.click_and_wait('search button')
 
 @action
 def assert_title_contains(browser, expected_title):
