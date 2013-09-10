@@ -2,7 +2,9 @@
 
 from pyfunct import config
 from pyfunct.browsers import BaseBrowserDriver
-from pyfunct.exceptions import PageNotLoadedException, ActionNotPerformableException
+from pyfunct.exceptions import (
+    PageNotLoadedException,
+    ActionNotPerformableException)
 
 splinter_available = True
 
@@ -14,13 +16,14 @@ except ImportError:
 
 class SplinterBrowserDriver(BaseBrowserDriver):
     """
-        This is a BrowserDriver based on splinter (http://splinter.cobrateam.info)
+        This is a BrowserDriver for splinter
+        (http://splinter.cobrateam.info)
         that implements the BaseBrowserDriver API.
 
         To use it, you must have splinter installed on your env.
 
-        For itself it's a browser driver that supports multiple browsing strategies,
-        such as selenium, phantomjs, zope, etc.
+        For itself it's a browser driver that supports multiple browsing
+        technologies such as selenium, phantomjs, zope, etc.
     """
 
     driver_name = 'splinter'
@@ -28,14 +31,16 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     def __init__(self):
         super(SplinterBrowserDriver, self).__init__()
         if not splinter_available:
-            raise ImportError("In order to use splinter Base Driver you have to "
-                "install it. Check the instructions at http://splinter.cobrateam.info")
+            raise ImportError(
+                "In order to use splinter Base Driver you have to install it. "
+                "Check the instructions at http://splinter.cobrateam.info")
         self._browser = Browser(config.default_browser)
 
     def _handle_empty_element_action(self, element):
         if not element:
-            raise ActionNotPerformableException("The action couldn't be perfomed"
-                " because the element couldn't be found; Try checking if your element"
+            raise ActionNotPerformableException(
+                "The action couldn't be perfomed because the element couldn't "
+                "be found; Try checking if your element"
                 "selector is correct and if the page is loaded properly.")
 
     @property
