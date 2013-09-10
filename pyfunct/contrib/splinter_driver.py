@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from functools import wraps
 from pyfunct import config
 from pyfunct.browsers import BaseBrowserDriver
 from pyfunct.exceptions import (
@@ -12,6 +13,26 @@ try:
     from splinter import Browser
 except ImportError:
     splinter_available = False
+
+
+def element_action(func):
+    """
+        Decorator that provides a shortcut for performing browser actions into
+        elements, such as click, mouse_over, etc.
+        When used, it should receive either an element or a string as the first
+        parameter (after self). If It's a string, it should be an alias to
+        a page element, and the action will be performed into this element.
+
+        It also executes `_handle_empty_element_action` before performing
+        the action.
+    """
+    @wraps(func)
+    def wrapper(self, element, *args, **kwargs):
+        if isinstance(element, str):
+            element = self.get_page_element(element)
+        self._handle_empty_element_action(element)
+        return func(self, element, *args, **kwargs)
+    return wrapper
 
 
 class SplinterBrowserDriver(BaseBrowserDriver):
@@ -79,24 +100,24 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     def get_element_by_tag(self, selector):
         return self._browser.find_by_tag(selector)
 
+    @element_action
     def type(self, element, text, slowly=False):
-        self._handle_empty_element_action(element)
         return element.type(text, slowly)
 
+    @element_action
     def click(self, element):
-        self._handle_empty_element_action(element)
         return element.click()
 
+    @element_action
     def check(self, element):
-        self._handle_empty_element_action(element)
         return element.check()
 
+    @element_action
     def uncheck(self, element):
-        self._handle_empty_element_action(element)
         return element.uncheck()
 
+    @element_action
     def mouse_over(self, element):
-        self._handle_empty_element_action(element)
         return element.mouse_over()
 
     def reload(self):

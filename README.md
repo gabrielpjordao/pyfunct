@@ -34,10 +34,10 @@ class MyTestCase(FunctTestCase):
         self.browser.open_page('wikipedia index')
 
         # Fill the search input with "Functional testing"
-        self.browser.type(self.browser['search input'], 'Functional testing')
+        self.browser.type('search input', 'Functional testing')
 
         # Submit the search by clicking the button
-        self.browser.click_and_wait(self.browser['search button'])
+        self.browser.click_and_wait('search button')
 
         page_title = self.browser.page_title
         expected_title = 'Functional testing - Wikipedia, the free encyclopedia'
