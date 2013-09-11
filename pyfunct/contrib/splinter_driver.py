@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from functools import wraps
 from pyfunct import config
 from pyfunct.browsers import BaseBrowserDriver
-from pyfunct.exceptions import PageNotLoadedException, ActionNotPerformableException
+from pyfunct.exceptions import (
+    PageNotLoadedException,
+    ActionNotPerformableException)
 
 splinter_available = True
 
@@ -12,15 +15,36 @@ except ImportError:
     splinter_available = False
 
 
+def element_action(func):
+    """
+        Decorator that provides a shortcut for performing browser actions into
+        elements, such as click, mouse_over, etc.
+        When used, it should receive either an element or a string as the first
+        parameter (after self). If It's a string, it should be an alias to
+        a page element, and the action will be performed into this element.
+
+        It also executes `_handle_empty_element_action` before performing
+        the action.
+    """
+    @wraps(func)
+    def wrapper(self, element, *args, **kwargs):
+        if isinstance(element, str):
+            element = self.get_page_element(element)
+        self._handle_empty_element_action(element)
+        return func(self, element, *args, **kwargs)
+    return wrapper
+
+
 class SplinterBrowserDriver(BaseBrowserDriver):
     """
-        This is a BrowserDriver based on splinter (http://splinter.cobrateam.info)
+        This is a BrowserDriver for splinter
+        (http://splinter.cobrateam.info)
         that implements the BaseBrowserDriver API.
 
         To use it, you must have splinter installed on your env.
 
-        For itself it's a browser driver that supports multiple browsing strategies,
-        such as selenium, phantomjs, zope, etc.
+        For itself it's a browser driver that supports multiple browsing
+        technologies such as selenium, phantomjs, zope, etc.
     """
 
     driver_name = 'splinter'
@@ -28,14 +52,16 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     def __init__(self):
         super(SplinterBrowserDriver, self).__init__()
         if not splinter_available:
-            raise ImportError("In order to use splinter Base Driver you have to "
-                "install it. Check the instructions at http://splinter.cobrateam.info")
+            raise ImportError(
+                "In order to use splinter Base Driver you have to install it. "
+                "Check the instructions at http://splinter.cobrateam.info")
         self._browser = Browser(config.default_browser)
 
     def _handle_empty_element_action(self, element):
         if not element:
-            raise ActionNotPerformableException("The action couldn't be perfomed"
-                " because the element couldn't be found; Try checking if your element"
+            raise ActionNotPerformableException(
+                "The action couldn't be perfomed because the element couldn't "
+                "be found; Try checking if your element"
                 "selector is correct and if the page is loaded properly.")
 
     @property
@@ -74,31 +100,32 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     def get_element_by_tag(self, selector):
         return self._browser.find_by_tag(selector)
 
+    @element_action
     def type(self, element, text, slowly=False):
-        self._handle_empty_element_action(element)
         return element.type(text, slowly)
 
+    @element_action
     def fill(self, element, text):
-      self._handle_empty_element_action(element)
       return element.fill(text)
-
+    
+    @element_action
     def clear(self, element):
       self.fill(element, '')
 
+    @element_action
     def click(self, element):
-        self._handle_empty_element_action(element)
         return element.click()
 
+    @element_action
     def check(self, element):
-        self._handle_empty_element_action(element)
         return element.check()
 
+    @element_action
     def uncheck(self, element):
-        self._handle_empty_element_action(element)
         return element.uncheck()
 
+    @element_action
     def mouse_over(self, element):
-        self._handle_empty_element_action(element)
         return element.mouse_over()
 
     def reload(self):

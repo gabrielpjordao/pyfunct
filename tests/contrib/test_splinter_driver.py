@@ -1,9 +1,12 @@
 from mock import patch, Mock
 
-from pyfunct import SplinterBrowserDriver
-from pyfunct.exceptions import PageNotLoadedException, ActionNotPerformableException
-
+from splinter.element_list import ElementList
+from pyfunct import SplinterBrowserDriver, Page
+from pyfunct.exceptions import (
+    PageNotLoadedException,
+    ActionNotPerformableException)
 import unittest
+
 
 class SplinterBrowserDriverTestCase(unittest.TestCase):
 
@@ -16,7 +19,6 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         driver._browser = mocked_browser
         return driver
 
-
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_page_url(self, mocked_browser):
 
@@ -27,7 +29,6 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         driver = self._get_driver(mocked_browser)
 
         self.assertEqual(driver.page_url, expected)
-
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_page_source(self, mocked_browser):
@@ -98,7 +99,6 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         mocked_browser.back.assert_called()
 
-
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_is_element_visible(self, mocked_browser):
 
@@ -136,7 +136,6 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         mocked_browser.find_by_xpath.assert_called_with(selector)
 
-
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_get_element_by_css(self, mocked_browser):
 
@@ -148,7 +147,6 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         mocked_browser.find_by_css.assert_called_with(selector)
 
-
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_get_element_by_id(self, mocked_browser):
 
@@ -159,7 +157,6 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         driver.get_element_by_id(selector)
 
         mocked_browser.find_by_id.assert_called_with(selector)
-
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_get_element_by_tag(self, mocked_browser):
@@ -228,7 +225,6 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         element.uncheck.assert_called()
 
-
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_execute_script(self, mocked_browser):
 
@@ -269,29 +265,70 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         driver.wait_pageload.assert_called_once_with(timeout)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
-    def test_click_action_with_not_found_element_cannot_be_performed(self, mocked_browser):
+    def test_click_action_with_not_found_element_cannot_be_performed(
+        self,
+        mocked_browser
+    ):
         driver = self._get_driver(mocked_browser)
-        element = []
+        element = ElementList([])
         with self.assertRaises(ActionNotPerformableException):
             driver.click(element)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
-    def test_check_action_with_not_found_element_cannot_be_performed(self, mocked_browser):
+    def test_check_action_with_not_found_element_cannot_be_performed(
+        self,
+        mocked_browser
+    ):
         driver = self._get_driver(mocked_browser)
-        element = []
+        element = ElementList([])
         with self.assertRaises(ActionNotPerformableException):
             driver.check(element)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
-    def test_uncheck_action_with_not_found_element_cannot_be_performed(self, mocked_browser):
+    def test_uncheck_action_with_not_found_element_cannot_be_performed(
+        self,
+        mocked_browser
+    ):
         driver = self._get_driver(mocked_browser)
-        element = []
+        element = ElementList([])
         with self.assertRaises(ActionNotPerformableException):
             driver.uncheck(element)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
-    def test_type_action_with_not_found_element_cannot_be_performed(self, mocked_browser):
+    def test_type_action_with_not_found_element_cannot_be_performed(
+        self,
+        mocked_browser
+    ):
         driver = self._get_driver(mocked_browser)
-        element = []
+        element = ElementList([])
         with self.assertRaises(ActionNotPerformableException):
             driver.type(element, 'some-text')
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_element_action_decorator_gets_elements_by_alias_str(
+        self,
+        mocked_browser
+    ):
+
+        selector = 'some_selector'
+        alias = 'some_alias'
+        test_page_name = 'TestPageForElementActionDecorator'
+
+        class TestPage(Page):
+
+            page_name = test_page_name
+
+            def get_url(self):
+                return '/'
+
+            @property
+            def elements_selectors(self):
+                return ((alias, selector),)
+
+        driver = self._get_driver(mocked_browser)
+        driver.open_page(test_page_name)
+        driver._browser.find_by_xpath.return_value = element_mock = Mock()
+
+        driver.click(alias)
+        driver._browser.find_by_xpath.assert_called_once_with(selector)
+        element_mock.click.assert_called_once_with()
