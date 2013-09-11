@@ -182,6 +182,29 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         element.type.assert_called_once_with(text, True)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_fill(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        text = 'Fill text'
+        element = Mock()
+
+        driver.fill(element, text)
+
+        element.fill.assert_called_once_with(text, True)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_clear(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        element = Mock()
+
+        driver.clear(element)
+
+        element.fill.assert_called_once_with(text, True)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_click(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)
@@ -303,6 +326,26 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         element = ElementList([])
         with self.assertRaises(ActionNotPerformableException):
             driver.type(element, 'some-text')
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_fill_action_with_not_found_element_cannot_be_performed(
+        self,
+        mocked_browser
+    ):
+        driver = self._get_driver(mocked_browser)
+        element = ElementList([])
+        with self.assertRaises(ActionNotPerformableException):
+            driver.fill(element, 'some-text')
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_clear_action_with_not_found_element_cannot_be_performed(
+        self,
+        mocked_browser
+    ):
+        driver = self._get_driver(mocked_browser)
+        element = ElementList([])
+        with self.assertRaises(ActionNotPerformableException):
+            driver.clear(element)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_element_action_decorator_gets_elements_by_alias_str(
