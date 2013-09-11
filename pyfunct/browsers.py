@@ -253,11 +253,31 @@ class BaseBrowserDriver(object):
 
     def type(self, element, text, slowly=False):
         """
-            Enters a text into an input element. If slowly is `True`, it should
+            Enters text into an input element. If slowly is `True`, it will
             press one key at a time, simulating a user input.
+            If the element already contains text, this action will append additional text to it.
         """
         raise NotImplementedError(
             "This browser doesn't support typing texts into elements.")
+
+      @element_action
+      def fill(self, element, text):
+        """
+            Fills the given element with the text specified.
+            If the element already contains text, this action will delete it and replace it with whatever is specified in the text parameter.
+        """
+
+        raise NotImplementedError(
+            "This browser does not support filling elements with text")
+
+      @element_action
+      def clear(self, element):
+        """
+            Clears the text from a given element.
+        """
+
+        raise NotImplementedError(
+            "This browser does not support clearing text from elements")
 
     def execute_javascript(self, script):
         """

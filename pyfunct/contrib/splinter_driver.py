@@ -105,6 +105,14 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         return element.type(text, slowly)
 
     @element_action
+    def fill(self, element, text):
+      return element.fill(text)
+    
+    @element_action
+    def clear(self, element):
+      self.fill(element, '')
+
+    @element_action
     def click(self, element):
         return element.click()
 
