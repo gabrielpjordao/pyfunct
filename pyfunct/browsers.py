@@ -260,8 +260,7 @@ class BaseBrowserDriver(object):
         raise NotImplementedError(
             "This browser doesn't support typing texts into elements.")
 
-      @element_action
-      def fill(self, element, text):
+    def fill(self, element, text):
         """
             Fills the given element with the text specified.
             If the element already contains text, this action will delete it and replace it with whatever is specified in the text parameter.
@@ -270,8 +269,7 @@ class BaseBrowserDriver(object):
         raise NotImplementedError(
             "This browser does not support filling elements with text")
 
-      @element_action
-      def clear(self, element):
+    def clear(self, element):
         """
             Clears the text from a given element.
         """

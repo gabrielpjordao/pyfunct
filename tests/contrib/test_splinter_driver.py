@@ -191,7 +191,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.fill(element, text)
 
-        element.fill.assert_called_once_with(text, True)
+        element.fill.assert_called_once_with(text)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_clear(self, mocked_browser):
@@ -202,7 +202,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.clear(element)
 
-        element.fill.assert_called_once_with(text, True)
+        element.fill.assert_called_once_with('')
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_click(self, mocked_browser):
