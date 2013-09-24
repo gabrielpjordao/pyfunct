@@ -163,6 +163,12 @@ class BaseBrowserDriver(object):
         """
         raise NotImplementedError("This browser doesn't support mouse over.")
 
+    def mouse_out(self, element):
+        """
+            Simulates an element mouse out.
+        """
+        raise NotImplementedError("This browser doesn't support mouse out.")
+
     def open_url(self, url):
         """
             Opens an URL and returns it's response.

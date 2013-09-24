@@ -128,6 +128,10 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     def mouse_over(self, element):
         return element.mouse_over()
 
+    @element_action
+    def mouse_out(self, element):
+        return element.mouse_out()
+
     def reload(self):
         return self._browser.reload()
 
