@@ -187,15 +187,7 @@ class BaseBrowserDriver(object):
             even if it's hidden. Otherwise, returns `False`.
         """
 
-        result = None
-
-        if isinstance(element, str):
-            result = self[element]
-        else:
-            result = element
-
-        return bool(result)
-
+        return bool(self[element] if isinstance(element, str) else element)
 
     def is_element_visible(self, element):
         """
