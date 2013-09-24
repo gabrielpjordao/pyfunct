@@ -1,4 +1,5 @@
 # PyFunct
+[![Build Status](https://travis-ci.org/gabrielpjordao/pyfunct.png)](https://travis-ci.org/gabrielpjordao/pyfunct)
 
 PyFuncT stands for Python Functional Testing and it is a small framework that aims to help writing functional automated tests with python, to test web applications.
 
