@@ -186,8 +186,16 @@ class BaseBrowserDriver(object):
             Returns `True` if an element is present in the page source,
             even if it's hidden. Otherwise, returns `False`.
         """
-        raise NotImplementedError(
-            "This browser doesn't support checking elements presence")
+
+        result = None
+
+        if isinstance(element, str):
+            result = self[element]
+        else:
+            result = element
+
+        return bool(result)
+
 
     def is_element_visible(self, element):
         """

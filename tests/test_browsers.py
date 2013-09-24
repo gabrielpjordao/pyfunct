@@ -1,5 +1,6 @@
 import unittest
 
+from mock import Mock
 from pyfunct.browsers import REGISTERED_DRIVERS, BaseBrowserDriver
 from pyfunct import Page, config
 from pyfunct.exceptions import InvalidUrlException
@@ -163,3 +164,25 @@ class BaseBrowserDriverTestCase(unittest.TestCase):
         expected_element = 'Element Got: selector=//selector, selection_type=xpath'
 
         self.assertEqual(element, expected_element)
+
+    def test_is_element_present_string_true(self):
+        browser = BaseBrowserDriver()
+        element = Mock()
+        browser.get_page_element = Mock(return_value=element)
+        browser.get_page_element.called_once_with(element)
+        self.assertTrue(browser.is_element_present('page element'))
+
+    def test_is_element_present_string_false(self):
+        browser = BaseBrowserDriver()
+        element = []
+        browser.get_page_element = Mock(return_value=element)
+        browser.get_page_element.called_once_with(element)
+        self.assertFalse(browser.is_element_present('page element'))
+
+    def test_is_element_present_element_true(self):
+        browser = BaseBrowserDriver()
+        self.assertTrue(browser.is_element_present(Mock()))
+
+    def test_is_element_present_element_false(self):
+        browser = BaseBrowserDriver()
+        self.assertFalse(browser.is_element_present([]))
