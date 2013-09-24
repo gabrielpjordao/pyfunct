@@ -70,7 +70,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.quit()
 
-        mocked_browser.quit.assert_called()
+        mocked_browser.quit.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_reload(self, mocked_browser):
@@ -79,7 +79,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.reload()
 
-        mocked_browser.reload.assert_called()
+        mocked_browser.reload.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_go_forward(self, mocked_browser):
@@ -88,7 +88,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.go_forward()
 
-        mocked_browser.forward.assert_called()
+        mocked_browser.forward.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_go_back(self, mocked_browser):
@@ -97,7 +97,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.go_back()
 
-        mocked_browser.back.assert_called()
+        mocked_browser.back.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_is_element_visible(self, mocked_browser):
@@ -134,7 +134,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.get_element_by_xpath(selector)
 
-        mocked_browser.find_by_xpath.assert_called_with(selector)
+        mocked_browser.find_by_xpath.assert_called_once_with(selector)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_get_element_by_css(self, mocked_browser):
@@ -145,7 +145,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.get_element_by_css(selector)
 
-        mocked_browser.find_by_css.assert_called_with(selector)
+        mocked_browser.find_by_css.assert_called_once_with(selector)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_get_element_by_id(self, mocked_browser):
@@ -156,7 +156,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.get_element_by_id(selector)
 
-        mocked_browser.find_by_id.assert_called_with(selector)
+        mocked_browser.find_by_id.assert_called_once_with(selector)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_get_element_by_tag(self, mocked_browser):
@@ -167,7 +167,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.get_element_by_tag(selector)
 
-        mocked_browser.find_by_tag.assert_called_with(selector)
+        mocked_browser.find_by_tag.assert_called_once_with(selector)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_type(self, mocked_browser):
@@ -213,7 +213,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.click(element)
 
-        element.click.assert_called()
+        element.click.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_mouse_over(self, mocked_browser):
@@ -224,7 +224,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.mouse_over(element)
 
-        element.mouse_over.assert_called()
+        element.mouse_over.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_check(self, mocked_browser):
@@ -235,7 +235,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.check(element)
 
-        element.check.assert_called()
+        element.check.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_uncheck(self, mocked_browser):
@@ -246,7 +246,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.uncheck(element)
 
-        element.uncheck.assert_called()
+        element.uncheck.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_execute_script(self, mocked_browser):
@@ -284,7 +284,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.click_and_wait(element, timeout=timeout)
 
-        driver.click.assert_called()
+        driver.click.assert_called_once_with(element)
         driver.wait_pageload.assert_called_once_with(timeout)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
