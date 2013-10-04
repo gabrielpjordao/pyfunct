@@ -1,5 +1,8 @@
 *.py[cod]
 
+# Log
+ghostdriver.log
+
 # C extensions
 *.so
 
