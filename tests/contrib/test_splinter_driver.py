@@ -274,6 +274,27 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         self.assertEqual(expected_result, result)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_get_iframe(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        iframe_id = 'my-iframe'
+        driver.get_iframe(iframe_id)
+
+        mocked_browser.get_iframe.assert_called_once_with(iframe_id)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_attach_file(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        input_name = 'image'
+        file_path = 'some/file/path'
+        driver.attach_file(input_name, file_path)
+
+        mocked_browser.attach_file.assert_called_once_with(input_name, file_path)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_wait_pageload(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)
