@@ -107,7 +107,7 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     @element_action
     def fill(self, element, text):
       return element.fill(text)
-    
+
     @element_action
     def clear(self, element):
       self.fill(element, '')
@@ -143,6 +143,9 @@ class SplinterBrowserDriver(BaseBrowserDriver):
 
     def execute_script(self, script):
         return self._browser.evaluate_script(script)
+
+    def get_iframe(self, iframe_id):
+        return self._browser.get_iframe(iframe_id)
 
     def wait_pageload(self, timeout=30):
         wait_interval = 0.05
