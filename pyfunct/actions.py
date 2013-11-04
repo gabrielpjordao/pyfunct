@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
+
 class Actions(object):
     """
-      This class is responsible for registering functions decorated with `@action`
-      to it and accessing them.
+      This class is responsible for registering functions decorated with
+      `@action` and accessing them.
     """
 
     # This is a dict having keys as functions names and values as functions.
     # `register_action` method handles adding functions here.
     registered_actions = {}
 
-
     def __getattr__(self, key):
         """
-            This is just a proxy to make all the actions from `registered_actions`
-            accessible from this instance.
+            This is just a proxy to make all the actions from
+            `registered_actions` accessible from this instance.
 
             Example::
                 >>> @action
@@ -37,14 +37,15 @@ class Actions(object):
         """
         cls.registered_actions[action_name] = action_fn
 
+
 def action(func):
     """
         It's a decorator that should be used to create actions.
-
-        Every action that uses it will be available at `FunctTestCase`, via `actions`
-        attribute.
+        Every action that uses it will be available at `FunctTestCase`,
+        via `actions` attribute.
     """
     Actions.register_action(func.__name__, func)
+
     def execute(*args, **kwargs):
         return func(*args, **kwargs)
     return execute

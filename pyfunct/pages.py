@@ -4,6 +4,7 @@ from pyfunct.exceptions import SelectorTypeNotSupportedException
 
 REGISTERED_PAGES = {}
 
+
 class PageMetaclass(type):
     """
       Metaclass for `Page`.
@@ -11,14 +12,14 @@ class PageMetaclass(type):
 
     def __init__(cls, name, bases, attributes):
         """
-            This registers the page elements defined in `elements_selectors` property
-            and adds the page to the `REGISTERED_PAGES`.
+            This registers the page elements defined in `elements_selectors`
+            property and adds the page to the `REGISTERED_PAGES`.
         """
         try:
             page_name = attributes['page_name']
         except KeyError:
-            raise NotImplementedError("You must specify a page name for %s." % cls.__name__)
-
+            raise NotImplementedError(
+                "You must specify a page name for %s." % cls.__name__)
 
         if not hasattr(cls, 'elements'):
             cls.elements = {}
@@ -35,8 +36,8 @@ class PageMetaclass(type):
 
 class Page(object):
     """
-        This class defines the Page model, which has two responsibilities: registering
-        elements selectors and setting the url for the page.
+        This class defines the Page model, which has two responsibilities:
+        registering elements selectors and setting the url for the page.
     """
 
     __metaclass__ = PageMetaclass
@@ -46,12 +47,13 @@ class Page(object):
 
     def get_url(self, *args, **kwargs):
         """
-            It's the page URL. It's a function because some pages requires special
-            behavior to build their urls, so it accepts arguments.
+            It's the page URL. It's a function because some pages requires
+            special behavior to build their urls, so it accepts arguments.
 
             The returned value must start with a slash.
         """
-        raise NotImplementedError("The page must implement the get_url method.")
+        raise NotImplementedError(
+            "The page must implement the get_url method.")
 
     @classmethod
     def register_element(cls, alias, selector, selection_type='xpath'):
