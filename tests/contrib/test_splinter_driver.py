@@ -284,6 +284,15 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         mocked_browser.get_iframe.assert_called_once_with(iframe_id)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_get_alert(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        driver.get_alert()
+
+        mocked_browser.get_alert.assert_called_once()
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_attach_file(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)
