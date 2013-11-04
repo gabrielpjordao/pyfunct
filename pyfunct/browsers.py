@@ -295,6 +295,13 @@ class BaseBrowserDriver(object):
         raise NotImplementedError(
             "This browser doesn't support switching to frames.")
 
+    def get_alert(self):
+        """
+            Switches to an alert element.
+        """
+        raise NotImplementedError(
+            "This browser doesn't support switching to alerts.")
+
     def attach_file(self, input_name, file_path):
         raise NotImplementedError(
             "This browser doesn't support attaching files to file inputs.")

@@ -147,6 +147,9 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     def get_iframe(self, iframe_id):
         return self._browser.get_iframe(iframe_id)
 
+    def get_alert(self):
+        return self._browser.get_alert()
+
     def attach_file(self, input_name, file_path):
         return self._browser.attach_file(input_name, file_path)
 
