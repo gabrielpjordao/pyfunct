@@ -142,7 +142,7 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         return self._browser.forward()
 
     def execute_script(self, script):
-        """This method is deprecated. Uses `execute_javascript` instead.
+        """This method is deprecated. Use `execute_javascript` instead.
         """
         return self._browser.evaluate_script(script)
 
