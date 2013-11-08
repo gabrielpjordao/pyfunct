@@ -260,15 +260,15 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         element.uncheck.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
-    def test_execute_script(self, mocked_browser):
+    def test_execute_javascript(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)
 
         script = '<script></script>'
         expected_result = 'Script result'
 
-        driver.execute_script(script)
-        result = mocked_browser.execute_script.return_value = expected_result
+        driver.execute_javascript(script)
+        result = mocked_browser.execute_javascript.return_value = expected_result
 
         mocked_browser.evaluate_script.assert_called_once_with(script)
         self.assertEqual(expected_result, result)
