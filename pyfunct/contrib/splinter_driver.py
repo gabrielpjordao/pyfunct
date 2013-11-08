@@ -142,6 +142,11 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         return self._browser.forward()
 
     def execute_script(self, script):
+        """This method is deprecated. Use `execute_javascript` instead.
+        """
+        return self._browser.evaluate_script(script)
+
+    def execute_javascript(self, script):
         return self._browser.evaluate_script(script)
 
     def get_iframe(self, iframe_id):
@@ -157,7 +162,7 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         wait_interval = 0.05
         elapsed = 0
 
-        while self.execute_script('document.readyState') != 'complete':
+        while self.execute_javascript('document.readyState') != 'complete':
             self.wait(wait_interval)
             elapsed += wait_interval
 
