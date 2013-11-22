@@ -126,3 +126,7 @@ There's no need to change the `default_driver_name`, cause it's using splinter b
 
 ### Step 5 - Run your tests
 Currently, PyFunct does not provide a test runner and you can run it as you wish. A good choice for it is [nose](https://github.com/nose-devs/nose).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gabrielpjordao/pyfunct/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
