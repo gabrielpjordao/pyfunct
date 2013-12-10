@@ -19,8 +19,9 @@ class FunctTestCase(unittest.TestCase):
     driver_name = None
 
     def __init__(self, *args, **kwargs):
-        self.browser = None
         self.__class__.browsers = []
+        self.__class__.browser = None
+
         super(FunctTestCase, self).__init__(*args, **kwargs)
 
         # Makes all actions registered with `@action` accessible by
@@ -28,8 +29,8 @@ class FunctTestCase(unittest.TestCase):
         self.actions = Actions()
 
     def setUp(self):
-        if self.browser is None:
-            self.browser = self.create_browser()
+        if self.__class__.browser is None:
+            self.__class__.browser = self.create_browser()
 
     def tearDown(self):
         for browser in self.__class__.browsers:
