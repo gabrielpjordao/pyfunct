@@ -18,6 +18,23 @@ class FunctTestCase(unittest.TestCase):
     #: `config.default_driver_name`, you can set this as the driver identifier.
     driver_name = None
 
+    def __init__(self, *args, **kwargs):
+        self.browser = None
+        self.__class__.browsers = []
+        super(FunctTestCase, self).__init__(*args, **kwargs)
+
+        # Makes all actions registered with `@action` accessible by
+        # `self.actions` attribute.
+        self.actions = Actions()
+
+    def setUp(self):
+        if self.browser is None:
+            self.browser = self.create_browser()
+
+    def tearDown(self):
+        for browser in self.__class__.browsers:
+            browser.clear_session()
+
     def create_browser(self, driver_name=None, *args, **kwargs):
         """
             This instantiates a browser and returns it. It also adds the
@@ -26,22 +43,11 @@ class FunctTestCase(unittest.TestCase):
         """
         driver_name = driver_name or config.default_driver_name
         browser = REGISTERED_DRIVERS[driver_name](*args, **kwargs)
-        self.browsers.append(browser)
+        self.__class__.browsers.append(browser)
         return browser
 
-    def __init__(self, *args, **kwargs):
-        super(FunctTestCase, self).__init__(*args, **kwargs)
-
-        # List of browsers to be quitted in tear down.
-        self.browsers = []
-
-        # Makes all actions registered with `@action` accessible by
-        # `self.actions` attribute.
-        self.actions = Actions()
-
-    def setUp(self):
-        self.browser = self.create_browser()
-
-    def tearDown(self):
-        for browser in self.browsers:
+    @classmethod
+    def tearDownClass(cls):
+        for browser in cls.browsers:
             browser.quit()
+        cls.browsers = []
