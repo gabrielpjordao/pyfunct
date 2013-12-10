@@ -6,7 +6,7 @@ PyFuncT stands for Python Functional Testing and it is a small framework that ai
 Principles:
 * <b>Organization</b>: Provides a clean workflow to store element selectors, pages and configurations, helping you to keep your tests organized and reusable.
 
-* <b>Flexibility</b>: PyFunct tests are fully built with python, giving you total flexibility. With frameworks that provide natural-language programming, sometimes it can get really tricky to perform simple actions (like opening two browsers in the same test if you need to test live updates, for instance)
+* <b>Flexibility</b>: PyFunct tests are fully built with python, giving you total flexibility. With test frameworks that provide natural-language programming, sometimes it can get really tricky to perform simple actions (like opening two browsers at the same time)
 
 * <b>Freedom</b>:  Most of the framework is customizable and optional, it means you can choose not to use some parts of it or make a few tweaks, if necessary.
 
@@ -18,11 +18,10 @@ PyFunct includes:
 
 ## Getting started
 
-This should get you started with the basic functionality. You can look for more examples
-in the `examples` folder.
+This should get you started with the basic functionality. There are more examples in the `examples` folder.
 
 ## Installing
-To install pyfunct, all you should do is:
+To install pyfunct, all you need to do is run:
 `pip install pyfunct`
 
 Or
@@ -31,7 +30,7 @@ Or
 
 
 ### Step 1 - The test case
-Here is a code snippet with two basic tests that do the same thing: A wikipedia search. The first uses pages and the second uses pages and actions. Both concepts will be explained ahead.
+Here is a code snippet with two basic tests that do the same thing: A wikipedia search. The first one uses pages and the second one uses pages and actions. Both concepts will be explained ahead.
 
 ```python
 from pyfunct import FunctTestCase
@@ -63,8 +62,9 @@ class MyTestCase(FunctTestCase):
 In the above code, we wrote a testcase that inherits from `FunctTestCase`. All PyFunct tests must inherit from it.
 `FunctTestCase` is just a testcase that inherits from `unittest.TestCase` (python's native unittest testcase) with a few shortcuts. It means you can use its methods (such as `assertIn`).
 
-Before each test execution, a browser instance is initialized. When the test is finished, it automatically exits.
-If you want to create multiple browsers, all you need to do is call `self.create_browser()`.
+Before a test suite runs, a browser instance is created. That same browser instance will be reused by all test cases from that class.
+The browser instance will be closed once all tests from the class finish running.
+You can also create as many browsers as you want by calling `self.create_browser()`.
 
 ### Step 2 - Creating pages
 In Step 1 we've made references to `wikipedia index`, `search input` and `search button`. These are aliases that were defined in a Page class. To create it, you should do the following:
