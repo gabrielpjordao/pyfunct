@@ -325,3 +325,10 @@ class BaseBrowserDriver(object):
         """
         raise NotImplementedError(
             "This browser doesn't support clicking an element and waiting")
+
+    def clear_session(self):
+      """
+        Clears the browser session
+      """
+      raise NotImplementedError(
+        "This browser does not support clearing the session")
