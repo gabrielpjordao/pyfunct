@@ -291,6 +291,21 @@ class BaseBrowserDriver(object):
         raise NotImplementedError(
             "This browser doesn't support executing javascript.")
 
+    def get_iframe(self, iframe_id):
+        raise NotImplementedError(
+            "This browser doesn't support switching to frames.")
+
+    def get_alert(self):
+        """
+            Switches to an alert element.
+        """
+        raise NotImplementedError(
+            "This browser doesn't support switching to alerts.")
+
+    def attach_file(self, input_name, file_path):
+        raise NotImplementedError(
+            "This browser doesn't support attaching files to file inputs.")
+
     def wait(self, seconds):
         """
             Just a utilitarian method to wait.

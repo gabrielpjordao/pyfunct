@@ -13,4 +13,5 @@ setup(
     include_package_data=True,
     install_requires=['splinter'],
     tests_require=['mock'],
+    test_suite="tests"
 )
