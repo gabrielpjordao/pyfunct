@@ -104,11 +104,12 @@ class BaseBrowserDriver(object):
         self.switch_page(page_name)
 
         url = self._current_page.get_url(*args, **kwargs)
+        provides_full_url = self._current_page.provides_full_url
 
-        if not url.startswith('/'):
+        if not url.startswith('/') and not provides_full_url:
             raise InvalidUrlException
 
-        url = config.base_url + url
+        url = config.base_url + url if not provides_full_url else url
 
         return self.open_url(url)
 
