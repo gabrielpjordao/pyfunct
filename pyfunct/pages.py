@@ -44,6 +44,7 @@ class Page(object):
 
     #: Should be set to a string and it's the alias used to identify the page
     page_name = None
+    provides_full_url = False
 
     def get_url(self, *args, **kwargs):
         """

@@ -86,6 +86,32 @@ class BaseBrowserDriverTestCase(unittest.TestCase):
         with self.assertRaises(InvalidUrlException):
             driver.open_page('page_with_invalid_url')
 
+    def test_a_page_that_provides_full_url(self):
+
+        class PageWithFullUrl(Page):
+
+            page_name = 'page_with_full_url'
+            provides_full_url = True
+
+            def get_url(self):
+                return 'http://myurl.com'
+
+        class FullURLBrowserTester(BaseBrowserDriver):
+            driver_name = 'full_url_driver'
+
+            def open_url(self, url):
+                """
+                    Mocks it in order to check if it was called properly
+                """
+                return url
+
+        driver = FullURLBrowserTester()
+
+        response = driver.open_page('page_with_full_url')
+        self.assertIsInstance(driver._current_page, PageWithFullUrl)
+
+        self.assertEqual(response, 'http://myurl.com')
+
     def test_getting_elements_by_different_selection_types(self):
 
         class GetElementTestDriver(BaseBrowserDriver):
