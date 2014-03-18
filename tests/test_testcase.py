@@ -3,6 +3,7 @@ import unittest
 from pyfunct import FunctTestCase, BaseConfig, action
 from pyfunct.browsers import BaseBrowserDriver
 
+
 class TestBrowserDriver(BaseBrowserDriver):
     """
         Browser Driver used for testing purposes.
@@ -11,9 +12,14 @@ class TestBrowserDriver(BaseBrowserDriver):
     driver_name = 'testing_browser'
 
     quit_call_count = 0
+    clear_session_call_count = 0
 
     def quit(self):
         self.quit_call_count += 1
+
+    def clear_session(self):
+        self.clear_session_call_count += 1
+
 
 class TestConfig(BaseConfig):
     """
@@ -22,6 +28,7 @@ class TestConfig(BaseConfig):
     """
 
     default_driver_name = 'testing_browser'
+
 
 class TestCaseTester(FunctTestCase):
 
@@ -32,7 +39,11 @@ class TestCaseTester(FunctTestCase):
         """
         pass
 
+
 class FunctTestCaseTestCase(unittest.TestCase):
+
+    def tearDown(self):
+        TestCaseTester.tearDownClass()
 
     def test_create_browser_with_default_config(self):
         testcase = TestCaseTester()
@@ -46,6 +57,9 @@ class FunctTestCaseTestCase(unittest.TestCase):
 
         class CustomDriver(BaseBrowserDriver):
             driver_name = 'custom_browser'
+
+            def quit(self):
+                pass
 
         testcase = TestCaseTester()
 
@@ -78,7 +92,7 @@ class FunctTestCaseTestCase(unittest.TestCase):
 
     def test_tearDown(self):
         """
-            Checks if the browsers were quitted after tearDown
+            Checks if the browsers weren't quitted after tearDown
         """
 
         testcase = TestCaseTester()
@@ -87,8 +101,24 @@ class FunctTestCaseTestCase(unittest.TestCase):
 
         # assert that no quit calls were made before teardown
         self.assertEqual(driver.quit_call_count, 0)
+        self.assertEqual(driver.clear_session_call_count, 0)
 
         testcase.tearDown()
+
+        # assert that, after teardown, the browser was quitted
+        self.assertEqual(driver.quit_call_count, 0)
+        self.assertEqual(driver.clear_session_call_count, 1)
+
+    def test_tearDownClass(self):
+
+        testcase = TestCaseTester()
+
+        driver = testcase.create_browser()
+
+        # assert that no quit calls were made before teardown
+        self.assertEqual(driver.quit_call_count, 0)
+
+        testcase.tearDownClass()
 
         # assert that, after teardown, the browser was quitted
         self.assertEqual(driver.quit_call_count, 1)

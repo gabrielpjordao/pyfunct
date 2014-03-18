@@ -172,3 +172,7 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     def click_and_wait(self, element, timeout=30):
         self.click(element)
         self.wait_pageload(timeout)
+
+    def clear_session(self):
+      self._browser.driver.delete_all_cookies()
+

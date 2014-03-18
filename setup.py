@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 setup(
     name='pyfunct',
@@ -11,7 +11,7 @@ setup(
     author=u'Gabriel Jordão',
     packages=find_packages(),
     include_package_data=True,
-    install_requires=['splinter'],
+    install_requires=['splinter==0.5.4'],
     tests_require=['mock'],
     test_suite="tests"
 )
