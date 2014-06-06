@@ -32,6 +32,20 @@ class TestConfig(BaseConfig):
 
 class TestCaseTester(FunctTestCase):
 
+    reuse_browser = True
+
+    def runTest(self):
+        """
+            Overrides it to prevent running tests from the testcase, as it's being
+            tested.
+        """
+        pass
+
+
+class NonReuseTestCaseTester(FunctTestCase):
+
+    reuse_browser = False
+
     def runTest(self):
         """
             Overrides it to prevent running tests from the testcase, as it's being
@@ -89,6 +103,18 @@ class FunctTestCaseTestCase(unittest.TestCase):
 
         # After setup, one browser was created
         self.assertEqual(len(testcase.browsers), 1)
+
+    def test_disabling_reuse_browser(self):
+
+        testcase = NonReuseTestCaseTester()
+
+        # No browsers were added yet
+        self.assertEqual(len(testcase.browsers), 0)
+
+        testcase.setUp()
+
+        # After setup, no browser was created
+        self.assertEqual(len(testcase.browsers), 0)
 
     def test_tearDown(self):
         """
