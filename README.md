@@ -62,7 +62,7 @@ class MyTestCase(FunctTestCase):
 In the above code, we wrote a testcase that inherits from `FunctTestCase`. All PyFunct tests must inherit from it.
 `FunctTestCase` is just a testcase that inherits from `unittest.TestCase` (python's native unittest testcase) with a few shortcuts. It means you can use its methods (such as `assertIn`).
 
-Before a test suite runs, a browser instance is created. That same browser instance will be reused by all test cases from that class.
+Before a test suite runs, a browser instance is created. That same browser instance will be reused by all test cases from that class, although it's the typical and default behavior, you can still disable it by setting the flag `reuse_browser` to `False` in your TestCase.
 The browser instance will be closed once all tests from the class finish running.
 You can also create as many browsers as you want by calling `self.create_browser()`.
 
