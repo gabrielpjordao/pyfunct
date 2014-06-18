@@ -216,6 +216,30 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         element.click.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_choose(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        value = 'radio_value_1'
+        element = Mock()
+
+        driver.choose(element, value)
+
+        element.choose.assert_called_once_with(value)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_select(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        value = 'option_value_1'
+        element = Mock()
+
+        driver.select(element, value)
+
+        element.select.assert_called_once_with(value)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_mouse_over(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)
