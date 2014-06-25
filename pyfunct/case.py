@@ -18,6 +18,9 @@ class FunctTestCase(unittest.TestCase):
     #: `config.default_driver_name`, you can set this as the driver identifier.
     driver_name = None
 
+    #: If you don't want to reuse the same browser window in through the test case, set it to False.
+    reuse_browser = True
+
     def __init__(self, *args, **kwargs):
         self.__class__.browsers = []
         self.__class__.browser = None
@@ -29,7 +32,7 @@ class FunctTestCase(unittest.TestCase):
         self.actions = Actions()
 
     def setUp(self):
-        if self.__class__.browser is None:
+        if self.__class__.browser is None and self.reuse_browser:
             self.__class__.browser = self.create_browser()
 
     def tearDown(self):
