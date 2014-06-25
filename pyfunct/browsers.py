@@ -144,6 +144,20 @@ class BaseBrowserDriver(object):
         raise NotImplementedError(
             "This browser doesn't support clicking elements")
 
+    def choose(self, element, value):
+        """
+            Chooses a radio element by value.
+        """
+        raise NotImplementedError(
+            "This browser doesn't support choosing radio elements")
+
+    def select(self, element, value):
+        """
+            Selects an option element from select by value.
+        """
+        raise NotImplementedError(
+            "This browser doesn't support selecting option elements")
+
     def check(self, element):
         """
             Checks a checkbox element.

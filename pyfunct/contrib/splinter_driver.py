@@ -117,6 +117,14 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         return element.click()
 
     @element_action
+    def choose(self, element, value):
+        return element.choose(value)
+
+    @element_action
+    def select(self, element, value):
+        return element.select(value)
+
+    @element_action
     def check(self, element):
         return element.check()
 
