@@ -122,6 +122,7 @@ class FunctTestCaseTestCase(unittest.TestCase):
         """
 
         testcase = TestCaseTester()
+        testcase.setUp()
 
         driver = testcase.create_browser()
 
@@ -132,8 +133,36 @@ class FunctTestCaseTestCase(unittest.TestCase):
         testcase.tearDown()
 
         # assert that, after teardown, the browser was quitted
+        self.assertEqual(driver.quit_call_count, 1)
+        self.assertEqual(driver.clear_session_call_count, 0)
+
+        # assert that default browser was only cleared
+        self.assertEqual(testcase.browser.quit_call_count, 0)
+        self.assertEqual(testcase.browser.clear_session_call_count, 1)
+
+        # assert that testcase keeps only the default browser
+        self.assertEqual([testcase.browser], testcase.browsers)
+
+    def test_tearDown_without_reuse_browser(self):
+        testcase = TestCaseTester()
+        testcase.reuse_browser = False
+
+        testcase.setUp()
+
+        driver = testcase.create_browser()
+
+        # assert that no quit calls were made before teardown
         self.assertEqual(driver.quit_call_count, 0)
-        self.assertEqual(driver.clear_session_call_count, 1)
+        self.assertEqual(driver.clear_session_call_count, 0)
+
+        testcase.tearDown()
+
+        # assert that, after teardown, the browser was quitted
+        self.assertEqual(driver.quit_call_count, 1)
+        self.assertEqual(driver.clear_session_call_count, 0)
+
+        # assert that testcase keeps no browser
+        self.assertEqual([], testcase.browsers)
 
     def test_tearDownClass(self):
 
@@ -148,3 +177,6 @@ class FunctTestCaseTestCase(unittest.TestCase):
 
         # assert that, after teardown, the browser was quitted
         self.assertEqual(driver.quit_call_count, 1)
+
+        # assert that testcase keeps no browser
+        self.assertEqual([], testcase.browsers)

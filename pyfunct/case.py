@@ -36,8 +36,14 @@ class FunctTestCase(unittest.TestCase):
             self.__class__.browser = self.create_browser()
 
     def tearDown(self):
-        for browser in self.__class__.browsers:
-            browser.clear_session()
+        cls = self.__class__
+        for browser in cls.browsers:
+            if self.reuse_browser and browser == cls.browser:
+                browser.clear_session()
+            else:
+                browser.quit()
+
+        cls.browsers = [cls.browser] if self.reuse_browser else []
 
     def create_browser(self, driver_name=None, *args, **kwargs):
         """
@@ -55,3 +61,4 @@ class FunctTestCase(unittest.TestCase):
         for browser in cls.browsers:
             browser.quit()
         cls.browsers = []
+
