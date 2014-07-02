@@ -130,6 +130,8 @@ class FunctTestCaseTestCase(unittest.TestCase):
         self.assertEqual(driver.quit_call_count, 0)
         self.assertEqual(driver.clear_session_call_count, 0)
 
+        self.assertEqual([testcase.browser, driver], testcase.browsers)
+
         testcase.tearDown()
 
         # assert that, after teardown, the browser was quitted
@@ -154,6 +156,8 @@ class FunctTestCaseTestCase(unittest.TestCase):
         # assert that no quit calls were made before teardown
         self.assertEqual(driver.quit_call_count, 0)
         self.assertEqual(driver.clear_session_call_count, 0)
+
+        self.assertEqual([driver], testcase.browsers)
 
         testcase.tearDown()
 

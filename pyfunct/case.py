@@ -41,9 +41,7 @@ class FunctTestCase(unittest.TestCase):
             if self.reuse_browser and browser == cls.browser:
                 browser.clear_session()
             else:
-                browser.quit()
-
-        cls.browsers = [cls.browser] if self.reuse_browser else []
+                self.quit_browser(browser)
 
     def create_browser(self, driver_name=None, *args, **kwargs):
         """
@@ -55,6 +53,10 @@ class FunctTestCase(unittest.TestCase):
         browser = REGISTERED_DRIVERS[driver_name](*args, **kwargs)
         self.__class__.browsers.append(browser)
         return browser
+
+    def quit_browser(self, browser):
+        browser.quit()
+        self.__class__.browsers.remove(browser)
 
     @classmethod
     def tearDownClass(cls):
