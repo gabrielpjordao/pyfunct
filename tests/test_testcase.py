@@ -13,9 +13,13 @@ class TestBrowserDriver(BaseBrowserDriver):
 
     quit_call_count = 0
     clear_session_call_count = 0
+    close_call_count = 0
 
     def quit(self):
         self.quit_call_count += 1
+
+    def close(self):
+        self.close_call_count += 1
 
     def clear_session(self):
         self.clear_session_call_count += 1
@@ -126,20 +130,23 @@ class FunctTestCaseTestCase(unittest.TestCase):
 
         driver = testcase.create_browser()
 
-        # assert that no quit calls were made before teardown
+        # assert that no close/quit calls were made before teardown
         self.assertEqual(driver.quit_call_count, 0)
+        self.assertEqual(driver.close_call_count, 0)
         self.assertEqual(driver.clear_session_call_count, 0)
 
         self.assertEqual([testcase.browser, driver], testcase.browsers)
 
         testcase.tearDown()
 
-        # assert that, after teardown, the browser was quitted
-        self.assertEqual(driver.quit_call_count, 1)
+        # assert that, after teardown, the browser was closed
+        self.assertEqual(driver.quit_call_count, 0)
+        self.assertEqual(driver.close_call_count, 1)
         self.assertEqual(driver.clear_session_call_count, 0)
 
         # assert that default browser was only cleared
         self.assertEqual(testcase.browser.quit_call_count, 0)
+        self.assertEqual(testcase.browser.close_call_count, 0)
         self.assertEqual(testcase.browser.clear_session_call_count, 1)
 
         # assert that testcase keeps only the default browser
@@ -153,16 +160,18 @@ class FunctTestCaseTestCase(unittest.TestCase):
 
         driver = testcase.create_browser()
 
-        # assert that no quit calls were made before teardown
+        # assert that no quit/close calls were made before teardown
         self.assertEqual(driver.quit_call_count, 0)
+        self.assertEqual(driver.close_call_count, 0)
         self.assertEqual(driver.clear_session_call_count, 0)
 
         self.assertEqual([driver], testcase.browsers)
 
         testcase.tearDown()
 
-        # assert that, after teardown, the browser was quitted
-        self.assertEqual(driver.quit_call_count, 1)
+        # assert that, after teardown, the browser was closed
+        self.assertEqual(driver.quit_call_count, 0)
+        self.assertEqual(driver.close_call_count, 1)
         self.assertEqual(driver.clear_session_call_count, 0)
 
         # assert that testcase keeps no browser
