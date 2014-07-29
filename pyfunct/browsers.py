@@ -194,7 +194,7 @@ class BaseBrowserDriver(object):
         """
           Closes the browser
         """
-        raise NotImplementedError("this browser doesn't suppont closing")
+        raise NotImplementedError("this browser doesn't support closing")
 
     def quit(self):
         """
