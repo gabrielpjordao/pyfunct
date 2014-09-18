@@ -20,6 +20,36 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         return driver
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    @patch('pyfunct.contrib.splinter_driver.config')
+    def test_default_browser(self, config, Browser):
+        expected_result = Mock()
+        Browser.return_value = expected_result
+
+        default_browser = Mock()
+        config.default_browser = default_browser
+
+        driver = SplinterBrowserDriver()
+
+        Browser.assert_called_once_with(default_browser)
+        self.assertEqual(driver._browser, expected_result)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_custom_browser(self, Browser):
+        args = ('remote', 'extra', )
+        kwargs = {
+            'url': 'http://fakeurl',
+            'extra': 123
+        }
+
+        expected_result = Mock()
+        Browser.return_value = expected_result
+
+        driver = SplinterBrowserDriver(*args, **kwargs)
+
+        Browser.assert_called_once_with(*args, **kwargs)
+        self.assertEqual(driver._browser, expected_result)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_page_url(self, mocked_browser):
 
         expected = 'some_url'
