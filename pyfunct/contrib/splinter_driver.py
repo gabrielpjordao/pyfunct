@@ -49,13 +49,14 @@ class SplinterBrowserDriver(BaseBrowserDriver):
 
     driver_name = 'splinter'
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        _args = args or (config.default_browser, )
         super(SplinterBrowserDriver, self).__init__()
         if not splinter_available:
             raise ImportError(
                 "In order to use splinter Base Driver you have to install it. "
                 "Check the instructions at http://splinter.cobrateam.info")
-        self._browser = Browser(config.default_browser)
+        self._browser = Browser(*_args, **kwargs)
 
     def _handle_empty_element_action(self, element):
         if not element:
