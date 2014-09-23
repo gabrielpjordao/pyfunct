@@ -41,7 +41,7 @@ class FunctTestCase(unittest.TestCase):
             if self.reuse_browser and browser == cls.browser:
                 browser.clear_session()
             else:
-                self.quit_browser(browser)
+                self.close_browser(browser)
 
     def create_browser(self, driver_name=None, *args, **kwargs):
         """
@@ -54,8 +54,8 @@ class FunctTestCase(unittest.TestCase):
         self.__class__.browsers.append(browser)
         return browser
 
-    def quit_browser(self, browser):
-        browser.quit()
+    def close_browser(self, browser):
+        browser.close()
         self.__class__.browsers.remove(browser)
 
     @classmethod

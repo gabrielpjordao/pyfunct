@@ -190,9 +190,15 @@ class BaseBrowserDriver(object):
         """
         raise NotImplementedError("This browser doesn't support opening urls")
 
+    def close(self):
+        """
+          Closes the browser
+        """
+        raise NotImplementedError("this browser doesn't support closing")
+
     def quit(self):
         """
-            Quits the browser.
+            Quits all browsers
         """
         raise NotImplementedError("This browser doesn't support quitting")
 
