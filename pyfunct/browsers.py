@@ -250,15 +250,6 @@ class BaseBrowserDriver(object):
 
         return self.get_element(selector, selection_type)
 
-    def select_by_text(self, element, text):
-        """
-            Selects an option element from select by text.
-        """
-        if isinstance(element, str):
-            element = self.get_page_element(element)
-        return element.find_by_xpath(
-                'option[normalize-space(.)="%s"]' % text).first._element.click()
-
     def get_element_by_xpath(self, selector):
         """
             Gets an element using an xPath selector.

@@ -191,51 +191,6 @@ class BaseBrowserDriverTestCase(unittest.TestCase):
 
         self.assertEqual(element, expected_element)
 
-    def _assert_select_by_text(self, browser, element):
-        option_name = 'My option'
-        expected_xpath = 'option[normalize-space(.)="%s"]' % option_name
-
-        expected_result = Mock()
-        option_mock = Mock()
-        option_mock._element.click.return_value = expected_result
-
-        element.find_by_xpath.return_value = Mock(first=option_mock)
-        result = browser.select_by_text(element, option_name)
-
-        element.find_by_xpath.assert_called_once_with(expected_xpath)
-        self.assertEqual(result, expected_result)
-
-    def test_select_by_text_by_string(self):
-        element = Mock()
-        element_name = 'my-select'
-
-        class PageWithElement(Page):
-            page_name = 'page_with_element'
-
-            @property
-            def elements_selectors(self):
-                return [
-                    (element_name, '//selector', 'xpath')
-                ]
-
-        class GetPageElementDriver(BaseBrowserDriver):
-
-            driver_name = 'get_page_element_driver'
-
-            def get_element_by_xpath(self, selector):
-                return element
-
-        driver = GetPageElementDriver()
-        driver.switch_page('page_with_element')
-
-        self._assert_select_by_text(driver, driver[element_name])
-        self.assertEqual(driver[element_name], element)
-
-    def test_select_by_text_by_element(self):
-        browser = BaseBrowserDriver()
-        element = Mock()
-        self._assert_select_by_text(browser, element)
-
     def test_is_element_present_string_true(self):
         browser = BaseBrowserDriver()
         element = Mock()

@@ -129,6 +129,11 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         return element.select(value)
 
     @element_action
+    def select_by_text(self, element, text):
+        return element.find_by_xpath(
+            'option[normalize-space(.)="%s"]' % text).first._element.click()
+
+    @element_action
     def check(self, element):
         return element.check()
 
