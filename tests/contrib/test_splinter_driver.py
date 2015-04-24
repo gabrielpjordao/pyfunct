@@ -270,6 +270,24 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         element.select.assert_called_once_with(value)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_select_by_text(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        option_name = 'Option text'
+        expected_xpath = 'option[normalize-space(.)="%s"]' % option_name
+        expected_result = Mock()
+        element = Mock()
+
+        element.find_by_xpath.return_value.first._element.click.return_value = expected_result
+
+        result = driver.select_by_text(element, option_name)
+
+        self.assertEqual(result, expected_result)
+        element.find_by_xpath.assert_called_once_with(expected_xpath)
+        element.find_by_xpath.return_value.first._element.click.assert_called_once_with()
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_mouse_over(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)
