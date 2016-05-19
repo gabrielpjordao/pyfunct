@@ -12,6 +12,6 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=['splinter==0.6.0'],
-    tests_require=['mock'],
+    tests_require=['mock==1.0.1'],
     test_suite="tests"
 )
