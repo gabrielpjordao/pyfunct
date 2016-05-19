@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from pyfunct.exceptions import SelectorTypeNotSupportedException
+from pyfunct.exceptions import SelectorTypeNotSupportedException, \
+     ExistentElementException
 
 REGISTERED_PAGES = {}
 
@@ -21,7 +22,7 @@ class PageMetaclass(type):
             raise NotImplementedError(
                 "You must specify a page name for %s." % cls.__name__)
 
-        if not hasattr(cls, 'elements'):
+        if not hasattr(cls, 'elements') or Page in bases:
             cls.elements = {}
 
         page = cls()
@@ -67,6 +68,9 @@ class Page(object):
 
         if selection_type not in ('xpath', 'id', 'css', 'name'):
             raise SelectorTypeNotSupportedException
+
+        if alias in cls.elements.keys():
+          raise ExistentElementException(alias)
 
         cls.elements[alias] = {
             'selector': selector,

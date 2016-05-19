@@ -37,3 +37,10 @@ class ActionNotPerformableException(Exception):
     """
         Raised whenever an action cannot be performed;
     """
+
+
+class ExistentElementException(Exception):
+    """
+    Exception raised when trying to register duplicated elements in the
+    same page.
+    """
