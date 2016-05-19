@@ -376,7 +376,7 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
 
         driver.get_alert()
 
-        mocked_browser.get_alert.assert_called_once()
+        mocked_browser.get_alert.assert_called_once_with()
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_attach_file(self, mocked_browser):
