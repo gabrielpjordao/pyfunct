@@ -18,7 +18,8 @@ class FunctTestCase(unittest.TestCase):
     #: `config.default_driver_name`, you can set this as the driver identifier.
     driver_name = None
 
-    #: If you don't want to reuse the same browser window in through the test case, set it to False.
+    #: If you don't want to reuse the same browser window in through the test
+    #: case, set it to False.
     reuse_browser = True
 
     def __init__(self, *args, **kwargs):
@@ -63,4 +64,3 @@ class FunctTestCase(unittest.TestCase):
         for browser in cls.browsers:
             browser.quit()
         cls.browsers = []
-

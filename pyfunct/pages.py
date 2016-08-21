@@ -66,11 +66,11 @@ class Page(object):
                 `elector`: Stores the actual selector
         """
 
-        if selection_type not in ('xpath', 'id', 'css', 'name'):
+        if selection_type not in ('xpath', 'id', 'css', 'name', 'text'):
             raise SelectorTypeNotSupportedException
 
         if alias in cls.elements.keys():
-          raise ExistentElementException(alias)
+            raise ExistentElementException(alias)
 
         cls.elements[alias] = {
             'selector': selector,

@@ -58,7 +58,8 @@ class BaseBrowserDriver(object):
             'xpath': self.get_element_by_xpath,
             'css': self.get_element_by_css,
             'id': self.get_element_by_id,
-            'tag': self.get_element_by_tag
+            'tag': self.get_element_by_tag,
+            'text': self.get_element_by_text,
         }
 
     @property
@@ -278,11 +279,19 @@ class BaseBrowserDriver(object):
         raise NotImplementedError(
             "This browser doesn't support getting elements by tag")
 
+    def get_element_by_text(self, selector):
+        """
+            Gets an element, selecting it by it's text.
+        """
+        raise NotImplementedError(
+            "This browser doesn't support getting elements by text")
+
     def type(self, element, text, slowly=False):
         """
             Enters text into an input element. If slowly is `True`, it will
             press one key at a time, simulating a user input.
-            If the element already contains text, this action will append additional text to it.
+            If the element already contains text, this action will append
+            additional text to it.
         """
         raise NotImplementedError(
             "This browser doesn't support typing texts into elements.")
@@ -290,7 +299,8 @@ class BaseBrowserDriver(object):
     def fill(self, element, text):
         """
             Fills the given element with the text specified.
-            If the element already contains text, this action will delete it and replace it with whatever is specified in the text parameter.
+            If the element already contains text, this action will delete it
+            and replace it with whatever is specified in the text parameter.
         """
 
         raise NotImplementedError(
@@ -348,8 +358,8 @@ class BaseBrowserDriver(object):
             "This browser doesn't support clicking an element and waiting")
 
     def clear_session(self):
-      """
-        Clears the browser session
-      """
-      raise NotImplementedError(
-        "This browser does not support clearing the session")
+        """
+            Clears the browser session
+        """
+        raise NotImplementedError(
+            "This browser does not support clearing the session")

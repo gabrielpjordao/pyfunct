@@ -129,9 +129,12 @@ class BaseBrowserDriverTestCase(unittest.TestCase):
             def get_element_by_tag(self, selector):
                 return 'tag(%s)' % selector
 
+            def get_element_by_text(self, selector):
+                return 'text(%s)' % selector
+
         driver = GetElementTestDriver()
 
-        selection_types = ('xpath', 'css', 'id', 'tag')
+        selection_types = ('xpath', 'css', 'id', 'tag', 'text')
 
         selector = 'anything'
 

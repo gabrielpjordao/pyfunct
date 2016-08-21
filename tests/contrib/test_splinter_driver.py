@@ -200,6 +200,17 @@ class SplinterBrowserDriverTestCase(unittest.TestCase):
         mocked_browser.find_by_tag.assert_called_once_with(selector)
 
     @patch('pyfunct.contrib.splinter_driver.Browser')
+    def test_get_element_by_text(self, mocked_browser):
+
+        driver = self._get_driver(mocked_browser)
+
+        selector = 'some_selector'
+
+        driver.get_element_by_text(selector)
+
+        mocked_browser.find_by_text.assert_called_once_with(selector)
+
+    @patch('pyfunct.contrib.splinter_driver.Browser')
     def test_type(self, mocked_browser):
 
         driver = self._get_driver(mocked_browser)

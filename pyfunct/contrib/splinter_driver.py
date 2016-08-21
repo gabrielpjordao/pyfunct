@@ -104,17 +104,20 @@ class SplinterBrowserDriver(BaseBrowserDriver):
     def get_element_by_tag(self, selector):
         return self._browser.find_by_tag(selector)
 
+    def get_element_by_text(self, selector):
+        return self._browser.find_by_text(selector)
+
     @element_action
     def type(self, element, text, slowly=False):
         return element.type(text, slowly)
 
     @element_action
     def fill(self, element, text):
-      return element.fill(text)
+        return element.fill(text)
 
     @element_action
     def clear(self, element):
-      self.fill(element, '')
+        self.fill(element, '')
 
     @element_action
     def click(self, element):
@@ -191,5 +194,4 @@ class SplinterBrowserDriver(BaseBrowserDriver):
         self.wait_pageload(timeout)
 
     def clear_session(self):
-      self._browser.driver.delete_all_cookies()
-
+        self._browser.driver.delete_all_cookies()
